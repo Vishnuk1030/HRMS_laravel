@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Employee Sign up</title>
+    <title>Leave Request Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="author" content>
@@ -122,6 +122,20 @@
         .open-button:hover {
             opacity: 1;
         }
+
+        /* Logout button */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgb(242, 226, 226);
+            color: rgb(232, 54, 22);
+            min-width: 160px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 
@@ -129,8 +143,8 @@
 
     <div id="app" class="app">
 
-  {{-- navbar content --}}
-  @include('admin.nav')
+        {{-- navbar content --}}
+        @include('user.nav_user')
 
 
         <div id="sidebar" class="app-sidebar">
@@ -140,12 +154,12 @@
                 <div class="menu">
 
                     <div class="menu-item ">
-                        <a href="{{ route('dashboard') }}" class="menu-link">
+                        <a href="{{ route('user_dashboard') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-dashboard"></i></span>
                             <span class="menu-text">Dashboard</span>
                         </a>
                     </div>
-                    <div class="menu-item active">
+                    {{-- <div class="menu-item active">
                         <a href="{{ route('employee') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-users"></i></span>
                             <span class="menu-text">Employees</span>
@@ -156,9 +170,9 @@
                             <span class="menu-icon"><i class="fa fa-address-card-o"></i></span>
                             <span class="menu-text">Job Vacancy</span>
                         </a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="#" class="menu-link">
+                    </div> --}}
+                    <div class="menu-item active">
+                        <a href="{{ route('user_leave') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-calendar-check-o"></i></span>
                             <span class="menu-text">Leave Request</span>
                         </a>
@@ -199,19 +213,19 @@
                                                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
                                                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                                                        Sign up New Employee</p>
+                                                        Apply leave</p>
 
-                                                    <form class="mx-1 mx-md-4" action="{{ route('emp_signup') }}"
+                                                    <form class="mx-1 mx-md-4" action="{{route('user_leave_form')}}"
                                                         method="post">
                                                         @csrf
 
                                                         <div class="d-flex flex-row align-items-center mb-4">
                                                             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                                             <div class="form-outline flex-fill mb-0">
-                                                                <label class="form-label"
-                                                                    for="form3Example1c">Employee ID</label>
-                                                                <input type="text" name="employeeid"
-                                                                    id="form3Example1c" class="form-control" />
+                                                                <label class="form-label" for="form3Example1c">Employee
+                                                                    ID</label>
+                                                                <input type="text" value="{{ Auth::guard('employee')->user()->employee_id}}" name="employeeid"
+                                                                    id="form3Example1c" class="form-control" readonly/>
                                                                 @error('employeeid')
                                                                     <span class="validate">{{ $message }}</span>
                                                                 @enderror
@@ -223,115 +237,79 @@
                                                             <div class="form-outline flex-fill mb-0">
                                                                 <label class="form-label"
                                                                     for="form3Example3c">Name</label>
-                                                                <input type="text" name="name"
-                                                                    id="form3Example3c" class="form-control" />
+                                                                <input type="text" value="{{ Auth::guard('employee')->user()->name}}" name="name" id="form3Example3c"
+                                                                    class="form-control" readonly/>
                                                                 @error('name')
                                                                     <span class="validate">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
                                                         </div>
 
+                                                        <div class="d-flex flex-row align-items-center mb-4">
+                                                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                                            <div class="form-outline flex-fill mb-0">
+                                                                <label class="form-label"
+                                                                    for="form3Example3c">Reason</label>
+                                                                <input type="text" name="reason" id="form3Example3c"
+                                                                    class="form-control" />
+                                                                @error('reason')
+                                                                    <span class="validate">{{ $message }}</span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+
+
 
                                                         <div class="d-flex flex-row align-items-center mb-4">
                                                             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                                             <div class="form-outline flex-fill mb-0">
                                                                 <label class="form-label"
-                                                                    for="form3Example3c">Email</label>
-                                                                <input type="email" name="email"
-                                                                    id="form3Example3c" class="form-control" />
-                                                                @error('email')
+                                                                    for="form3Example3c">From</label>
+                                                                <input type="date" name="from" id="form3Example3c"
+                                                                    class="form-control" />
+                                                                @error('from')
                                                                     <span class="validate">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
                                                         </div>
+
 
                                                         <div class="d-flex flex-row align-items-center mb-4">
                                                             <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                                             <div class="form-outline flex-fill mb-0">
                                                                 <label class="form-label"
-                                                                    for="form3Example3c">Place</label>
-                                                                <input type="text" name="place"
+                                                                    for="form3Example3c">To</label>
+                                                                <input type="date" name="to"
                                                                     id="form3Example3c" class="form-control" />
-                                                                @error('place')
+                                                                @error('to')
                                                                     <span class="validate">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
                                                         </div>
 
 
-                                                        <div class="d-flex flex-row align-items-center mb-4">
-                                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                                            <div class="form-outline flex-fill mb-0">
-                                                                <label class="form-label"
-                                                                    for="form3Example4cd">Gender</label><br>
-                                                                <input type="radio" id="form3Example4cd"
-                                                                    name="gender" value="male" />Male
-                                                                <input type="radio" id="form3Example4cd"
-                                                                    name="gender" value="female" />Female
-                                                                <br>
-                                                                @error('gender')
-                                                                    <span class="validate">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
                                                         <div class="d-flex flex-row align-items-center mb-4">
                                                             <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                                             <div class="form-outline flex-fill mb-0">
                                                                 <label class="form-label"
-                                                                    for="form3Example4c">Designation</label>
-                                                                <input type="text" name="designation"
-                                                                    id="form3Example4c" class="form-control" />
-                                                                @error('designation')
-                                                                    <span class="validate">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex flex-row align-items-center mb-4">
-                                                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                                            <div class="form-outline flex-fill mb-0">
-                                                                <label class="form-label"
-                                                                    for="form3Example4c">position</label>
-                                                                <input type="text" name="position"
-                                                                    id="form3Example4c" class="form-control" />
-                                                                @error('position')
-                                                                    <span class="validate">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex flex-row align-items-center mb-4">
-                                                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                                            <div class="form-outline flex-fill mb-0">
-                                                                <label class="form-label"
-                                                                    for="form3Example4c">Salary</label>
-                                                                <input type="number" name="salary"
-                                                                    id="form3Example4c" class="form-control" />
-                                                                @error('salary')
+                                                                    for="form3Example4c">Description</label>
+                                                                <textarea name="descp"cols="30" rows="10" id="form3Example3c" class="form-control"></textarea>
+                                                                @error('descp')
                                                                     <span class="validate">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
                                                         </div>
 
                                                         <div class="d-flex flex-row align-items-center mb-4">
-                                                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                                             <div class="form-outline flex-fill mb-0">
                                                                 <label class="form-label"
-                                                                    for="form3Example3c">Password</label>
-                                                                <input type="password" name="password"
-                                                                    id="form3Example3c" class="form-control" />
-                                                                @error('password')
-                                                                    <span class="validate">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="d-flex flex-row align-items-center mb-4">
-                                                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                                            <div class="form-outline flex-fill mb-0">
-                                                                <label class="form-label" for="form3Example3c">Confirm
-                                                                    Password</label>
-                                                                <input type="password" name="confirmpassword"
-                                                                    id="form3Example3c" class="form-control" />
-                                                                @error('confirmpassword')
+                                                                    for="form3Example4c">Status</label>
+                                                                    <select name="status" id="form3Example3c" class="form-control">
+                                                                        <option value="pending">Pending</option>
+                                                                      </select>
+                                                                @error('status')
                                                                     <span class="validate">{{ $message }}</span>
                                                                 @enderror
                                                             </div>
@@ -339,12 +317,13 @@
 
 
                                                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                                            <button type="submit" class="btn btn-primary btn-lg">Sign
-                                                                Up</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary btn-lg">Apply
+                                                            </button>
 
                                                         </div>
                                                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                                            <a href="{{ route('employee') }}"
+                                                            <a href="{{ route('user_leave') }}"
                                                                 class="btn btn-danger btn-lg">Back</a>
                                                             {{-- <button type="submit"
                                                                 class="btn btn-danger btn-lg">Back</button> --}}
@@ -358,7 +337,7 @@
                                                 <div
                                                     class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                                    <img src="{{ asset('assets/img/HRMS.png') }}"
+                                                    <img src="{{ asset('assets/img/leaveimg.png') }}"
                                                         class="img-fluid rounded-3" alt="Sample image">
 
                                                 </div>

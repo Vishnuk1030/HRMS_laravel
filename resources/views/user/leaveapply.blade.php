@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>HRM | Employee</title>
+    <title>HRM | Job Vacancy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="author" content>
@@ -116,6 +116,8 @@
         .open-button:hover {
             opacity: 1;
         }
+
+        /* Logout button */
         .dropdown-content {
             display: none;
             position: absolute;
@@ -134,8 +136,11 @@
 <body>
 
     <div id="app" class="app">
+
         {{-- navbar content --}}
-        @include('admin.nav')
+        @include('user.nav_user')
+
+
 
 
         <div id="sidebar" class="app-sidebar">
@@ -145,25 +150,25 @@
                 <div class="menu">
 
                     <div class="menu-item ">
-                        <a href="{{ route('dashboard') }}" class="menu-link">
+                        <a href="{{ route('user_dashboard') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-dashboard"></i></span>
                             <span class="menu-text">Dashboard</span>
                         </a>
                     </div>
-                    <div class="menu-item active">
+                    {{-- <div class="menu-item ">
                         <a href="{{ route('employee') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-users"></i></span>
                             <span class="menu-text">Employees</span>
                         </a>
                     </div>
-                    <div class="menu-item">
-                        <a href="{{ route('job') }}" class="menu-link">
+                    <div class="menu-item active">
+                        <a href="{{route('job')}}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-address-card-o"></i></span>
                             <span class="menu-text">Job Vacancy</span>
                         </a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="{{route('leave')}}" class="menu-link">
+                    </div> --}}
+                    <div class="menu-item active">
+                        <a href="{{ route('user_leave') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-calendar-check-o"></i></span>
                             <span class="menu-text">Leave Request</span>
                         </a>
@@ -193,7 +198,7 @@
 
 
             <h1 class="page-header mb-3">
-                Employee <small>here's what's happening with your system today.</small>
+                Apply For leave <small>here's what's happening with your system today.</small>
             </h1>
             <br>
 
@@ -213,19 +218,18 @@
 
                         <div class="col-sm-3">
 
-                            <div class="card" style="width: 18rem;">
+                            {{-- <div class="card" style="width: 18rem;"> --}}
 
-                                <div class="card-body btn btn-primary rounded text-center">
+                            <div class="card-body btn btn-success rounded text-center">
 
-                                    <a href="{{ route('emp_signup') }}" class="open-button btn btn-primary"><img
-                                            src="{{ asset('assets/img/create_emp.png') }}" width="50px" />Sign up
-                                        a new employee</a>
-                                    {{-- <button class="open-button btn btn-primary" onclick="openForm()">Register New
+                                <a href="{{ route('user_leave_form') }}" class="open-button btn btn-success"><img
+                                        src="{{ asset('assets/img/leaveimg.png') }}" width="50px" /> Leave Apply</a>
+                                {{-- <button class="open-button btn btn-primary" onclick="openForm()">Register New
                                         Employee</button> --}}
 
-                                </div>
-
                             </div>
+
+                            {{-- </div> --}}
 
                         </div>
 
@@ -239,45 +243,42 @@
             <br>
 
             <hr>
+<h1 class="page-header mb-3">Leave Apply History</h1>
+<br>
             <table class="table table-striped text-center table-bordered">
                 <thead>
 
                     <tr>
                         <th scope="col">Employee Id</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Place</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Designation</th>
-                        <th scope="col">position</th>
-                        <th scope="col">salary</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Reason</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Applied On</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($employees as $employee)
-                        <tr>
-                            <th scope="row">{{ $employee->employee_id }}</th>
-                            <td>{{ $employee->name }}</td>
-                            <td>{{ $employee->email }}</td>
-                            <td>{{ $employee->place }}</td>
-                            <td>{{ $employee->gender }}</td>
-                            <td>{{ $employee->designation }}</td>
-                            <td>{{ $employee->position }}</td>
-                            <td>{{ $employee->salary }}</td>
-                            <td><a href="{{ route('edit_Emp', encrypt($employee->id)) }}" class="btn btn-success"><img
-                                        src="{{ asset('assets/img/edit.png') }}" width="20px"></a>
-                                <a href="{{ route('delete_Emp', $employee->id) }}" class="btn btn-danger"
-                                    onclick="return confirm('Are you sure want to delete?')"><img
-                                        src="{{ asset('assets/img/delete.png') }}" width="20px"></a>
-                            </td>
-                        </tr>
-                    @endforeach
+
+                    <tr>
+                        <th scope="row"></th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+
 
                 </tbody>
             </table>
             <div>
-                {{ $employees->links() }}
+
             </div>
 
 
@@ -285,23 +286,13 @@
 
 
 
-
         <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
-
 
 
 
     </div>
 
-    <script>
-        function openForm() {
-            document.getElementById("myForm").style.display = "block";
-        }
 
-        function closeForm() {
-            document.getElementById("myForm").style.display = "none";
-        }
-    </script>
 
     <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="{{asset('assets/js/vendor.min.js')}}" type="fc5e4ccb8f4049623d6b5dfb-text/javascript"></script>

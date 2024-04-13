@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-
 class Employee extends Model implements AuthenticatableContract
 {
     use HasFactory, Authenticatable;

@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>HRM | Employee</title>
+    <title>HRM | Leave Request</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="author" content>
@@ -116,6 +116,7 @@
         .open-button:hover {
             opacity: 1;
         }
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -134,8 +135,11 @@
 <body>
 
     <div id="app" class="app">
+
         {{-- navbar content --}}
         @include('admin.nav')
+
+
 
 
         <div id="sidebar" class="app-sidebar">
@@ -150,19 +154,19 @@
                             <span class="menu-text">Dashboard</span>
                         </a>
                     </div>
-                    <div class="menu-item active">
+                    <div class="menu-item ">
                         <a href="{{ route('employee') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-users"></i></span>
                             <span class="menu-text">Employees</span>
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="{{ route('job') }}" class="menu-link">
+                        <a href="{{route('job')}}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-address-card-o"></i></span>
                             <span class="menu-text">Job Vacancy</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item active">
                         <a href="{{route('leave')}}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-calendar-check-o"></i></span>
                             <span class="menu-text">Leave Request</span>
@@ -193,7 +197,7 @@
 
 
             <h1 class="page-header mb-3">
-                Employee <small>here's what's happening with your system today.</small>
+                Leave Request <small>here's what's happening with your system today.</small>
             </h1>
             <br>
 
@@ -211,23 +215,22 @@
 
                         </div>
 
-                        <div class="col-sm-3">
+                        {{-- <div class="col-sm-3">
 
                             <div class="card" style="width: 18rem;">
 
-                                <div class="card-body btn btn-primary rounded text-center">
+                                <div class="card-body btn btn-success rounded text-center">
 
-                                    <a href="{{ route('emp_signup') }}" class="open-button btn btn-primary"><img
-                                            src="{{ asset('assets/img/create_emp.png') }}" width="50px" />Sign up
-                                        a new employee</a>
-                                    {{-- <button class="open-button btn btn-primary" onclick="openForm()">Register New
-                                        Employee</button> --}}
+                                    <a href="{{ route('job_post') }}" class="open-button btn btn-success"><img
+                                            src="{{ asset('assets/img/job.jpg') }}" width="50px" /> Post a New
+                                        Vacancy</a>
+
 
                                 </div>
 
                             </div>
 
-                        </div>
+                        </div> --}}
 
 
 
@@ -255,29 +258,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($employees as $employee)
+
                         <tr>
-                            <th scope="row">{{ $employee->employee_id }}</th>
-                            <td>{{ $employee->name }}</td>
-                            <td>{{ $employee->email }}</td>
-                            <td>{{ $employee->place }}</td>
-                            <td>{{ $employee->gender }}</td>
-                            <td>{{ $employee->designation }}</td>
-                            <td>{{ $employee->position }}</td>
-                            <td>{{ $employee->salary }}</td>
-                            <td><a href="{{ route('edit_Emp', encrypt($employee->id)) }}" class="btn btn-success"><img
-                                        src="{{ asset('assets/img/edit.png') }}" width="20px"></a>
-                                <a href="{{ route('delete_Emp', $employee->id) }}" class="btn btn-danger"
-                                    onclick="return confirm('Are you sure want to delete?')"><img
-                                        src="{{ asset('assets/img/delete.png') }}" width="20px"></a>
-                            </td>
+
                         </tr>
-                    @endforeach
+
 
                 </tbody>
             </table>
             <div>
-                {{ $employees->links() }}
+
             </div>
 
 

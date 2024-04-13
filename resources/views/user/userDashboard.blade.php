@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>HRM | Dashboard</title>
+    <title>User | Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="author" content>
@@ -46,7 +46,7 @@
 
     <div id="app" class="app">
         {{-- navbar content --}}
-        @include('admin.nav')
+        @include('user.nav_user')
 
 
         <div id="sidebar" class="app-sidebar">
@@ -56,12 +56,12 @@
                 <div class="menu">
 
                     <div class="menu-item active">
-                        <a href="{{ route('dashboard') }}" class="menu-link">
+                        <a href="{{ route('user_dashboard') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-dashboard"></i></span>
                             <span class="menu-text">Dashboard</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    {{-- <div class="menu-item">
                         <a href="{{ route('employee') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-users"></i></span>
                             <span class="menu-text">Employees</span>
@@ -72,9 +72,9 @@
                             <span class="menu-icon"><i class="fa fa-address-card-o"></i></span>
                             <span class="menu-text">Job Vacancy</span>
                         </a>
-                    </div>
+                    </div> --}}
                     <div class="menu-item">
-                        <a href="{{ route('leave') }}" class="menu-link">
+                        <a href="{{ route('user_leave') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-calendar-check-o"></i></span>
                             <span class="menu-text">Leave Request</span>
                         </a>
@@ -85,8 +85,6 @@
                             <span class="menu-text">Complaints</span>
                         </a>
                     </div>
-
-
 
 
                 </div>
@@ -103,7 +101,7 @@
 
 
             <h1 class="page-header mb-3">
-                Welcome, {{ $admin->name }} <small>to your dashboard.!</small>
+                Welcome,{{ Auth::guard('employee')->user()->name }} <small>to your dashboard.!</small>
             </h1>
 
 
@@ -124,14 +122,14 @@
                                         class="ms-auto d-block mb-n3" style="max-height: 105px">
                                 </div>
                                 <div class="card-body position-relative">
-                                    <h5 class="text-white text-opacity-80 mb-3 fs-16px">Number of Admin</h5>
-                                    <h3 class="text-white mt-n1">{{ $admincount }}</h3>
+                                    <h5 class="text-white text-opacity-80 mb-3 fs-16px">Leave Approved</h5>
+                                    <h3 class="text-white mt-n1">4</h3>
                                     <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
                                         <div class="progrss-bar progress-bar-striped bg-white" style="width: 50%">
                                         </div>
                                     </div>
-                                    <div class="text-white text-opacity-80 mb-4"><i
-                                            class="fa fa-caret-up"></i><br>casual and urgency</div>
+                                    <div class="text-white text-opacity-80 mb-4"><i class="fa fa-caret-up"></i><br>
+                                    </div>
                                     <div><a href="#"
                                             class="text-white d-flex align-items-center text-decoration-none">View
                                             report <i
@@ -160,14 +158,14 @@
 
 
                                 <div class="card-body position-relative">
-                                    <h5 class="text-white text-opacity-80 mb-3 fs-16px">Number of Employee</h5>
-                                    <h3 class="text-white mt-n1">{{ $empcount }}</h3>
+                                    <h5 class="text-white text-opacity-80 mb-3 fs-16px">Leave Rejected</h5>
+                                    <h3 class="text-white mt-n1">5</h3>
                                     <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
                                         <div class="progrss-bar progress-bar-striped bg-white" style="width: 80%">
                                         </div>
                                     </div>
-                                    <div class="text-white text-opacity-80 mb-4"><i class="fa fa-caret-up"></i> <br>we
-                                        were working together</div>
+                                    <div class="text-white text-opacity-80 mb-4"><i class="fa fa-caret-up"></i> <br>
+                                    </div>
                                     <div><a href="#"
                                             class="text-white d-flex align-items-center text-decoration-none">View
                                             report <i
@@ -191,8 +189,8 @@
 
 
                                 <div class="card-body position-relative">
-                                    <h5 class="text-white text-opacity-80 mb-3 fs-16px">Number of vacant position</h5>
-                                    <h3 class="text-white mt-n1">{{ $job }}</h3>
+                                    <h5 class="text-white text-opacity-80 mb-3 fs-16px">Pending Action</h5>
+                                    <h3 class="text-white mt-n1">6</h3>
                                     <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
                                         <div class="progrss-bar progress-bar-striped bg-white" style="width: 80%">
                                         </div>
@@ -211,7 +209,7 @@
 
                         </div>
 
-                        <div class="col-sm-3">
+                        {{-- <div class="col-sm-3">
 
                             <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-pink"
                                 style="min-height: 199px;">
@@ -241,7 +239,7 @@
 
                             </div>
 
-                        </div>
+                        </div> --}}
 
                     </div>
 

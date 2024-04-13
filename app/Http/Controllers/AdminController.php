@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -46,22 +46,30 @@ class AdminController extends Controller
     public function login()
     {
 
-        //login page validate
+        // login page validate
         $validated = request()->validate([
             "email" => "required|email",
             "password" => "required|min:6",
         ]);
 
         if (auth()->attempt($validated)) {
-
             request()->session()->regenerate();
-            return redirect()->route('dashboard')->with('success', 'Logged in SuccessFully');
+            return redirect()->route('dashboard')->with('success',' Admin Logged In Successfully.!');
         }
+
 
         return redirect()->route('login')->withErrors([
             'password' => 'Invalid email or password'
         ]);
     }
 
+    public function logout()
+    {
+        auth()->logout();
 
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'Logged Out Successfully');
+    }
 }

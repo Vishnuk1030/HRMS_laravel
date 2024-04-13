@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Employee;
+use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,8 +15,11 @@ class DashboardController extends Controller
 {
     public function DashboardShow()
     {
-
-        return view('admin.dashboard');
+        $admin = Auth::user();
+        $admincount = Admin::count();
+        $empcount = Employee::count();
+        $job = Vacancy::count();
+        return view('admin.dashboard', compact('empcount', 'job', 'admin','admincount'));
     }
     public function employeeshow()
     {

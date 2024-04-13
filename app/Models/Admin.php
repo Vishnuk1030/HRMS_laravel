@@ -8,7 +8,6 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
 
-
 class Admin extends Model implements AuthenticatableContract
 {
     use HasFactory, Authenticatable;
@@ -19,4 +18,5 @@ class Admin extends Model implements AuthenticatableContract
         'password',
         'cnf_password',
     ];
+
 }
