@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Admin | Employee</title>
+    <title>Admin | Complaint Request</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="author" content>
@@ -116,6 +116,8 @@
         .open-button:hover {
             opacity: 1;
         }
+
+        /* Logout button */
         .dropdown-content {
             display: none;
             position: absolute;
@@ -134,8 +136,11 @@
 <body>
 
     <div id="app" class="app">
+
         {{-- navbar content --}}
         @include('admin.nav')
+
+
 
 
         <div id="sidebar" class="app-sidebar">
@@ -150,26 +155,26 @@
                             <span class="menu-text">Dashboard</span>
                         </a>
                     </div>
-                    <div class="menu-item active">
+                    <div class="menu-item ">
                         <a href="{{ route('employee') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-users"></i></span>
                             <span class="menu-text">Employees</span>
                         </a>
                     </div>
-                    <div class="menu-item">
+                    <div class="menu-item ">
                         <a href="{{ route('job') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-address-card-o"></i></span>
                             <span class="menu-text">Job Vacancy</span>
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="{{route('leave_accept')}}" class="menu-link">
+                        <a href="{{ route('leave_accept') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-calendar-check-o"></i></span>
                             <span class="menu-text">Leave Request</span>
                         </a>
                     </div>
-                    <div class="menu-item">
-                        <a href="{{route('complaint_handle')}}" class="menu-link">
+                    <div class="menu-item active">
+                        <a href="{{ route('complaint_handle') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-bullhorn"></i></span>
                             <span class="menu-text">Complaints</span>
                         </a>
@@ -193,7 +198,7 @@
 
 
             <h1 class="page-header mb-3">
-                Employee <small>Let's manage the employees</small>
+                Handle Complaints <small>Let's open up</small>
             </h1>
             <br>
 
@@ -213,19 +218,7 @@
 
                         <div class="col-sm-3">
 
-                            <div class="card" style="width: 18rem;">
 
-                                <div class="card-body btn btn-primary rounded text-center">
-
-                                    <a href="{{ route('emp_signup') }}" class="open-button btn btn-primary"><img
-                                            src="{{ asset('assets/img/create_emp.png') }}" width="50px" />Sign up
-                                        a new employee</a>
-                                    {{-- <button class="open-button btn btn-primary" onclick="openForm()">Register New
-                                        Employee</button> --}}
-
-                                </div>
-
-                            </div>
 
                         </div>
 
@@ -239,45 +232,86 @@
             <br>
 
             <hr>
+
+            <br>
             <table class="table table-striped text-center table-bordered">
                 <thead>
 
                     <tr>
                         <th scope="col">Employee Id</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Place</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Designation</th>
-                        <th scope="col">position</th>
-                        <th scope="col">salary</th>
+                        <th scope="col">Complaint Title</th>
+                        <th scope="col">Complaint Description</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    @foreach ($employees as $employee)
+                    @foreach ($complaints as $complaint)
                         <tr>
-                            <th scope="row">{{ $employee->employee_id }}</th>
-                            <td>{{ $employee->name }}</td>
-                            <td>{{ $employee->email }}</td>
-                            <td>{{ $employee->place }}</td>
-                            <td>{{ $employee->gender }}</td>
-                            <td>{{ $employee->designation }}</td>
-                            <td>{{ $employee->position }}</td>
-                            <td>{{ $employee->salary }}</td>
-                            <td><a href="{{ route('edit_Emp', encrypt($employee->id)) }}" class="btn btn-success"><img
-                                        src="{{ asset('assets/img/edit.png') }}" width="20px"></a>
-                                <a href="{{ route('delete_Emp', $employee->id) }}" class="btn btn-danger"
-                                    onclick="return confirm('Are you sure want to delete?')"><img
-                                        src="{{ asset('assets/img/delete.png') }}" width="20px"></a>
+                            <th scope="row">{{ $complaint->employee_id }}</th>
+                            <td>{{ $complaint->name }}</td>
+                            <td>{{ $complaint->complaint_title }}</td>
+                            <td>{{ $complaint->complaint_description }}</td>
+
+                            @if ($complaint->status == 'pending')
+                                <td><img src="{{ asset('assets/img/pending.png') }}" alt="" width="50px">
+                                </td>
+                            @elseif($complaint->status == 'solved')
+                                <td><img src="{{ asset('assets/img/approve.png') }}" alt="" width="50px">
+                                </td>
+                            @else
+                                <td><img src="{{ asset('assets/img/reject.png') }}" alt="" width="50px"></td>
+                            @endif
+
+                            <td>
+                                @if ($complaint->status == 'solved')
+                                    <a href="{{ url('complaint_reject', $complaint->id) }}"
+                                        class="btn btn-danger">Reject</a>
+                                @elseif ($complaint->status == 'reject')
+                                    <a href="{{ url('complaint_solve', $complaint->id) }}"
+                                        class="btn btn-primary">Solve</a>
+                                @else
+                                    <a href="{{ url('complaint_reject', $complaint->id) }}"
+                                        class="btn btn-danger">Reject</a>
+                                    <a href="{{ url('complaint_solve', $complaint->id) }}"
+                                        class="btn btn-primary">Solve</a>
+                                @endif
+
+
                             </td>
+
+                            {{--
+                            @if ($emp->status == 'pending')
+                                <td><img src="{{ asset('assets/img/pending.png') }}" alt="" width="50px">
+                                </td>
+                            @elseif($emp->status == 'approved')
+                                <td><img src="{{ asset('assets/img/approve.png') }}" alt="" width="50px">
+                                </td>
+                            @else
+                                <td><img src="{{ asset('assets/img/reject.png') }}" alt="" width="50px"></td>
+                            @endif
+                            <td>
+                                @if ($emp->status == 'approved')
+                                    <a href="{{ url('reject_leave', $emp->id) }}" class="btn btn-danger">Reject</a>
+                                @elseif ($emp->status == 'rejected')
+                                    <a href="{{ url('approve_leave', $emp->id) }}" class="btn btn-success">Approve</a>
+                                @else
+                                    <a href="{{ url('approve_leave', $emp->id) }}" class="btn btn-success">Approve</a>
+                                    <a href="{{ url('reject_leave', $emp->id) }}" class="btn btn-danger">Reject</a>
+                                @endif
+
+
+                            </td> --}}
+
                         </tr>
                     @endforeach
-
                 </tbody>
+
             </table>
             <div>
-                {{ $employees->links() }}
+                {{ $complaints->links() }}
             </div>
 
 
@@ -285,23 +319,13 @@
 
 
 
-
         <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
-
 
 
 
     </div>
 
-    <script>
-        function openForm() {
-            document.getElementById("myForm").style.display = "block";
-        }
 
-        function closeForm() {
-            document.getElementById("myForm").style.display = "none";
-        }
-    </script>
 
     <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="{{asset('assets/js/vendor.min.js')}}" type="fc5e4ccb8f4049623d6b5dfb-text/javascript"></script>

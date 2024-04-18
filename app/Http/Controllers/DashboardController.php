@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Employee;
+use App\Models\Leave;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,9 @@ class DashboardController extends Controller
         $admin = Auth::user();
         $admincount = Admin::count();
         $empcount = Employee::count();
+        $leavecount = Leave::count();
         $job = Vacancy::count();
-        return view('admin.dashboard', compact('empcount', 'job', 'admin','admincount'));
+        return view('admin.dashboard', compact('empcount', 'job', 'admin', 'admincount', 'leavecount'));
     }
     public function employeeshow()
     {
@@ -84,7 +86,7 @@ class DashboardController extends Controller
             'salary' => 'required|min:3|max:25',
         ]);
         Employee::findOrFail($id)->update([
-            "employee_id" => $request["employeeid"],
+            "employee_id" => $request->employeeid,
             "name" => $request->name,
             "email" => $request->email,
             "gender" => $request->gender,
@@ -94,5 +96,10 @@ class DashboardController extends Controller
             "salary" => $request->salary,
         ]);
         return redirect()->route('employee')->with('success', 'Employee details Updated Successfully!.');
+    }
+    public function showLeaveAccept()
+    {
+        $leave_emp = Leave::paginate(6);
+        return view('admin.leaveRequest', compact('leave_emp'));
     }
 }

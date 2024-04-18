@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Leave Request Form</title>
+    <title>User | Leave Request Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="author" content>
@@ -178,7 +178,7 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="{{route('complaint_form')}}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-bullhorn"></i></span>
                             <span class="menu-text">Complaints</span>
                         </a>

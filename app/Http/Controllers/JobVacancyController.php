@@ -13,10 +13,7 @@ class JobVacancyController extends Controller
         return view('admin.jobVacancy');
     }
 
-    // public function showJobPostForm()
-    // {
-    //     return view('admin.postjob');
-    // }
+
     public function createnewjob()
     {
         $validate = request()->validate([

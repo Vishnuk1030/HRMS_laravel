@@ -37,7 +37,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #afd8f0;
+            background-image: url("{{ asset('assets/img/login.png') }}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
             column-gap: 30px;
         }
 

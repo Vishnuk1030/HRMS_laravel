@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthenticateDashboard
+class UserAuthenticateDashboard
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class AuthenticateDashboard
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
-            return redirect()->route('login');
+            return redirect()->route('user_login');
         }
         return $next($request);
     }

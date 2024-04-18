@@ -80,7 +80,7 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="{{ route('complaint_form') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-bullhorn"></i></span>
                             <span class="menu-text">Complaints</span>
                         </a>
@@ -91,7 +91,6 @@
 
             </div>
 
-
             <button class="app-sidebar-mobile-backdrop" data-dismiss="sidebar-mobile"></button>
 
         </div>
@@ -101,7 +100,7 @@
 
 
             <h1 class="page-header mb-3">
-                Welcome,{{ Auth::guard('employee')->user()->name }} <small>to your dashboard.!</small>
+                Welcome, {{ Auth::guard('employee')->user()->name }} <small>to your user dashboard.!</small>
             </h1>
 
 
@@ -114,6 +113,38 @@
 
                         <div class="col-sm-3">
 
+                            <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-indigo"
+                                style="min-height: 199px;">
+
+                                <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+                                    <img src="{{ asset('assets/img/icon/browser.svg') }}" alt
+                                        class="ms-auto d-block mb-n3" style="max-height: 105px">
+                                </div>
+
+
+                                <div class="card-body position-relative">
+                                    <h5 class="text-white text-opacity-80 mb-3 fs-16px">Pending Action</h5>
+                                    <h3 class="text-white mt-n1">{{ $pendingLeave->count() }}</h3>
+                                    <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
+                                        <div class="progrss-bar progress-bar-striped bg-white" style="width: 80%">
+                                        </div>
+                                    </div>
+                                    <div class="text-white text-opacity-80 mb-4"><i class="fa fa-caret-up"></i>
+                                        <br>let's acheive the career together
+                                    </div>
+                                    <div><a href="#"
+                                            class="text-white d-flex align-items-center text-decoration-none">View
+                                            report <i
+                                                class="fa fa-chevron-right ms-2 text-white text-opacity-50"></i></a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-3">
+
                             <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-orange"
                                 style="min-height: 199px;">
 
@@ -123,7 +154,7 @@
                                 </div>
                                 <div class="card-body position-relative">
                                     <h5 class="text-white text-opacity-80 mb-3 fs-16px">Leave Approved</h5>
-                                    <h3 class="text-white mt-n1">4</h3>
+                                    <h3 class="text-white mt-n1">{{ $ApprovedLeave->count() }}</h3>
                                     <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
                                         <div class="progrss-bar progress-bar-striped bg-white" style="width: 50%">
                                         </div>
@@ -153,13 +184,9 @@
                                         class="ms-auto d-block mb-n3" style="max-height: 105px">
                                 </div>
 
-
-
-
-
                                 <div class="card-body position-relative">
                                     <h5 class="text-white text-opacity-80 mb-3 fs-16px">Leave Rejected</h5>
-                                    <h3 class="text-white mt-n1">5</h3>
+                                    <h3 class="text-white mt-n1">{{ $RejectedLeave->count() }}</h3>
                                     <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
                                         <div class="progrss-bar progress-bar-striped bg-white" style="width: 80%">
                                         </div>
@@ -177,37 +204,6 @@
 
                         </div>
 
-                        <div class="col-sm-3">
-
-                            <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-indigo"
-                                style="min-height: 199px;">
-
-                                <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
-                                    <img src="{{ asset('assets/img/icon/browser.svg') }}" alt
-                                        class="ms-auto d-block mb-n3" style="max-height: 105px">
-                                </div>
-
-
-                                <div class="card-body position-relative">
-                                    <h5 class="text-white text-opacity-80 mb-3 fs-16px">Pending Action</h5>
-                                    <h3 class="text-white mt-n1">6</h3>
-                                    <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
-                                        <div class="progrss-bar progress-bar-striped bg-white" style="width: 80%">
-                                        </div>
-                                    </div>
-                                    <div class="text-white text-opacity-80 mb-4"><i class="fa fa-caret-up"></i>
-                                        <br>let's acheive the career together
-                                    </div>
-                                    <div><a href="#"
-                                            class="text-white d-flex align-items-center text-decoration-none">View
-                                            report <i
-                                                class="fa fa-chevron-right ms-2 text-white text-opacity-50"></i></a>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
 
                         {{-- <div class="col-sm-3">
 
@@ -248,13 +244,10 @@
             </div>
 
 
-
         </div>
 
 
         <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
-
-
 
 
     </div>

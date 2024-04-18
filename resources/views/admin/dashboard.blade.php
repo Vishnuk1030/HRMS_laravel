@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>HRM | Dashboard</title>
+    <title>Admin | Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="author" content>
@@ -74,20 +74,17 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="{{ route('leave') }}" class="menu-link">
+                        <a href="{{ route('leave_accept') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-calendar-check-o"></i></span>
                             <span class="menu-text">Leave Request</span>
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="{{ route('complaint_handle') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-bullhorn"></i></span>
                             <span class="menu-text">Complaints</span>
                         </a>
                     </div>
-
-
-
 
                 </div>
 
@@ -103,7 +100,7 @@
 
 
             <h1 class="page-header mb-3">
-                Welcome, {{ $admin->name }} <small>to your dashboard.!</small>
+                Welcome, {{ $admin->name }} <small>to your admin dashboard.!</small>
             </h1>
 
 
@@ -224,7 +221,7 @@
 
                                 <div class="card-body position-relative">
                                     <h5 class="text-white text-opacity-80 mb-3 fs-16px">Leave Request</h5>
-                                    <h3 class="text-white mt-n1">34</h3>
+                                    <h3 class="text-white mt-n1">{{ $leavecount }}</h3>
                                     <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
                                         <div class="progrss-bar progress-bar-striped bg-white" style="width: 80%">
                                         </div>
@@ -255,9 +252,6 @@
 
 
         <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
-
-
-
 
     </div>
 

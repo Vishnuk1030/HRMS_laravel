@@ -43,6 +43,10 @@ return [
         'employee' => [
             'driver' => 'session',
             'provider' => 'employees'
+        ],
+        'leave' => [
+            'driver' => 'session',
+            'provider' => 'leaves'
         ]
     ],
 
@@ -71,7 +75,11 @@ return [
         'employees' => [
             'driver' => 'eloquent',
             'model' => App\Models\Employee::class,
-        ]
+        ],
+        'leaves' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Leave::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',

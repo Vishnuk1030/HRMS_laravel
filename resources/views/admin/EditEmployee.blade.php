@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Employee Sign up</title>
+    <title>Admin | Edit Employee</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="author" content>
@@ -123,6 +123,20 @@
         .open-button:hover {
             opacity: 1;
         }
+
+        /* Logout button */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgb(242, 226, 226);
+            color: rgb(232, 54, 22);
+            min-width: 160px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 
@@ -131,8 +145,8 @@
     <div id="app" class="app">
 
 
-  {{-- navbar content --}}
-  @include('admin.nav')
+        {{-- navbar content --}}
+        @include('admin.nav')
 
 
         <div id="sidebar" class="app-sidebar">
@@ -154,19 +168,19 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="{{route('job')}}" class="menu-link">
+                        <a href="{{ route('job') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-address-card-o"></i></span>
                             <span class="menu-text">Job Vacancy</span>
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="{{route('leave_accept')}}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-calendar-check-o"></i></span>
                             <span class="menu-text">Leave Request</span>
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="{{route('complaint_handle')}}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-bullhorn"></i></span>
                             <span class="menu-text">Complaints</span>
                         </a>
@@ -203,15 +217,16 @@
                                                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                                                         Edit Employee Details</p>
 
-                                                    <form class="mx-1 mx-md-4" action="{{ route('update_Emp', $employee->id) }}"
+                                                    <form class="mx-1 mx-md-4"
+                                                        action="{{ route('update_Emp', $employee->id) }}"
                                                         method="post">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="d-flex flex-row align-items-center mb-4">
                                                             <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                                             <div class="form-outline flex-fill mb-0">
-                                                                <label class="form-label"
-                                                                    for="form3Example1c">Employee ID</label>
+                                                                <label class="form-label" for="form3Example1c">Employee
+                                                                    ID</label>
                                                                 <input type="text" name="employeeid"
                                                                     id="form3Example1c"
                                                                     value="{{ $employee->employee_id }}"
@@ -227,8 +242,8 @@
                                                             <div class="form-outline flex-fill mb-0">
                                                                 <label class="form-label"
                                                                     for="form3Example3c">Name</label>
-                                                                <input type="text" name="name"
-                                                                    id="form3Example3c" value="{{ $employee->name }}"
+                                                                <input type="text" name="name" id="form3Example3c"
+                                                                    value="{{ $employee->name }}"
                                                                     class="form-control" />
                                                                 @error('name')
                                                                     <span class="validate">{{ $message }}</span>

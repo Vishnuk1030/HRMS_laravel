@@ -30,7 +30,7 @@
         </form>
 
         <div class="menu-item dropdown">
-            <a href="#" data-bs-toggle="dropdown" data-display="static" class="dropdown">
+            <a href="{{route('user_profile')}}" data-bs-toggle="dropdown" data-display="static" class="dropdown">
                 <div class="menu-img online">
                     <img src="{{ asset('assets/img/admin.webp') }}" alt class="ms-100 mh-100 rounded-circle">
                 </div>

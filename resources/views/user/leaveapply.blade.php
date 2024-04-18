@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>HRM | Job Vacancy</title>
+    <title>User | Leave Apply</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="author" content>
@@ -174,7 +174,7 @@
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="{{route('complaint_form')}}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-bullhorn"></i></span>
                             <span class="menu-text">Complaints</span>
                         </a>
@@ -243,8 +243,8 @@
             <br>
 
             <hr>
-<h1 class="page-header mb-3">Leave Apply History</h1>
-<br>
+            <h1 class="page-header mb-3">Leave Apply History</h1>
+            <br>
             <table class="table table-striped text-center table-bordered">
                 <thead>
 
@@ -255,30 +255,41 @@
                         <th scope="col">From</th>
                         <th scope="col">To</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Status</th>
                         <th scope="col">Applied On</th>
-
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
+
                 <tbody>
+                    @foreach ($leaves as $leave)
+                        <tr>
+                            <th scope="row">{{$leave->employee_id}}</th>
+                            <td>{{ $leave->name }}</td>
+                            <td>{{ $leave->reason }}</td>
+                            <td>{{ date('d-m-Y', strtotime($leave->from)) }}</td>
+                            <td>{{ date('d-m-Y', strtotime($leave->to)) }}</td>
+                            <td>{{ $leave->description }}</td>
+                            <td>{{ date('d-m-Y', strtotime($leave->created_at)) }}</td>
 
-                    <tr>
-                        <th scope="row"></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                            @if ($leave->status == 'pending')
+                                <td><img src="{{ asset('assets/img/pending.png') }}" alt="" width="50px">
+                                </td>
+                            @elseif($leave->status == 'approved')
+                                <td><img src="{{ asset('assets/img/approve.png') }}" alt="" width="50px">
+                                </td>
+                            @else
+                                <td><img src="{{ asset('assets/img/reject.png') }}" alt="" width="50px">
+                                </td>
+                            @endif
 
-                    </tr>
-
+                        </tr>
+                    @endforeach
 
                 </tbody>
+
             </table>
             <div>
-
+                {{ $leaves->links() }}
             </div>
 
 

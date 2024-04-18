@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>HRM | Leave Request</title>
+    <title>Admin | Leave Request</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content>
     <meta name="author" content>
@@ -117,6 +117,7 @@
             opacity: 1;
         }
 
+        /* Logout button */
         .dropdown-content {
             display: none;
             position: absolute;
@@ -140,8 +141,6 @@
         @include('admin.nav')
 
 
-
-
         <div id="sidebar" class="app-sidebar">
 
             <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
@@ -160,27 +159,24 @@
                             <span class="menu-text">Employees</span>
                         </a>
                     </div>
-                    <div class="menu-item">
-                        <a href="{{route('job')}}" class="menu-link">
+                    <div class="menu-item ">
+                        <a href="{{ route('job') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-address-card-o"></i></span>
                             <span class="menu-text">Job Vacancy</span>
                         </a>
                     </div>
                     <div class="menu-item active">
-                        <a href="{{route('leave')}}" class="menu-link">
+                        <a href="{{ route('leave_accept') }}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-calendar-check-o"></i></span>
                             <span class="menu-text">Leave Request</span>
                         </a>
                     </div>
                     <div class="menu-item">
-                        <a href="#" class="menu-link">
+                        <a href="{{route('complaint_handle')}}" class="menu-link">
                             <span class="menu-icon"><i class="fa fa-bullhorn"></i></span>
                             <span class="menu-text">Complaints</span>
                         </a>
                     </div>
-
-
-
 
 
                 </div>
@@ -197,7 +193,7 @@
 
 
             <h1 class="page-header mb-3">
-                Leave Request <small>here's what's happening with your system today.</small>
+                Handle Leave Requests <small>Being a human on emergency </small>
             </h1>
             <br>
 
@@ -215,22 +211,21 @@
 
                         </div>
 
-                        {{-- <div class="col-sm-3">
+                        <div class="col-sm-3">
 
-                            <div class="card" style="width: 18rem;">
+                            {{-- <div class="card" style="width: 18rem;"> --}}
+                            {{--
+                            <div class="card-body btn btn-success rounded text-center">
 
-                                <div class="card-body btn btn-success rounded text-center">
-
-                                    <a href="{{ route('job_post') }}" class="open-button btn btn-success"><img
-                                            src="{{ asset('assets/img/job.jpg') }}" width="50px" /> Post a New
-                                        Vacancy</a>
+                                <a href="{{ route('user_leave_form') }}" class="open-button btn btn-success"><img
+                                        src="{{ asset('assets/img/leaveimg.png') }}" width="50px" /> Leave Apply</a>
 
 
-                                </div>
+                            </div> --}}
 
-                            </div>
+                            {{-- </div> --}}
 
-                        </div> --}}
+                        </div>
 
 
 
@@ -242,56 +237,73 @@
             <br>
 
             <hr>
+
+            <br>
             <table class="table table-striped text-center table-bordered">
                 <thead>
 
                     <tr>
                         <th scope="col">Employee Id</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Place</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Designation</th>
-                        <th scope="col">position</th>
-                        <th scope="col">salary</th>
+                        <th scope="col">Reason</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Applied On</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <tbody>
 
+                <tbody>
+                    @foreach ($leave_emp as $emp)
                         <tr>
+                            <th scope="row">{{ $emp->employee_id }}</th>
+                            <td>{{ $emp->name }}</td>
+                            <td>{{ $emp->reason }}</td>
+                            <td>{{ date('d-m-Y', strtotime($emp->from)) }}</td>
+                            <td>{{ date('d-m-Y', strtotime($emp->to)) }}</td>
+                            <td>{{ $emp->description }}</td>
+                            <td>{{ date('d-m-Y', strtotime($emp->created_at)) }}</td>
+
+                            @if ($emp->status == 'pending')
+                                <td><img src="{{ asset('assets/img/pending.png') }}" alt="" width="50px">
+                                </td>
+                            @elseif($emp->status == 'approved')
+                                <td><img src="{{ asset('assets/img/approve.png') }}" alt="" width="50px">
+                                </td>
+                            @else
+                                <td><img src="{{ asset('assets/img/reject.png') }}" alt="" width="50px"></td>
+                            @endif
+                            <td>
+                                @if ($emp->status == 'approved')
+                                    <a href="{{ url('reject_leave', $emp->id) }}" class="btn btn-danger">Reject</a>
+                                @elseif ($emp->status == 'rejected')
+                                    <a href="{{ url('approve_leave', $emp->id) }}" class="btn btn-success">Approve</a>
+                                @else
+                                    <a href="{{ url('approve_leave', $emp->id) }}" class="btn btn-success">Approve</a>
+                                    <a href="{{ url('reject_leave', $emp->id) }}" class="btn btn-danger">Reject</a>
+                                @endif
+
+
+                            </td>
 
                         </tr>
-
-
+                    @endforeach
                 </tbody>
+
             </table>
             <div>
-
+                {{ $leave_emp->links() }}
             </div>
 
 
         </div>
 
-
-
-
         <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
-
-
-
 
     </div>
 
-    <script>
-        function openForm() {
-            document.getElementById("myForm").style.display = "block";
-        }
-
-        function closeForm() {
-            document.getElementById("myForm").style.display = "none";
-        }
-    </script>
 
     <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="{{asset('assets/js/vendor.min.js')}}" type="fc5e4ccb8f4049623d6b5dfb-text/javascript"></script>
