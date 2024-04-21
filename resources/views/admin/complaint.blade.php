@@ -180,10 +180,6 @@
                         </a>
                     </div>
 
-
-
-
-
                 </div>
 
             </div>
@@ -259,7 +255,7 @@
                                 <td><img src="{{ asset('assets/img/pending.png') }}" alt="" width="50px">
                                 </td>
                             @elseif($complaint->status == 'solved')
-                                <td><img src="{{ asset('assets/img/approve.png') }}" alt="" width="50px">
+                                <td><img src="{{ asset('assets/img/solve.webp') }}" alt="" width="50px">
                                 </td>
                             @else
                                 <td><img src="{{ asset('assets/img/reject.png') }}" alt="" width="50px"></td>
@@ -271,12 +267,12 @@
                                         class="btn btn-danger">Reject</a>
                                 @elseif ($complaint->status == 'reject')
                                     <a href="{{ url('complaint_solve', $complaint->id) }}"
-                                        class="btn btn-primary">Solve</a>
+                                        class="btn btn-info">Solve</a>
                                 @else
+                                    <a href="{{ url('complaint_solve', $complaint->id) }}"
+                                        class="btn btn-info">Solve</a>
                                     <a href="{{ url('complaint_reject', $complaint->id) }}"
                                         class="btn btn-danger">Reject</a>
-                                    <a href="{{ url('complaint_solve', $complaint->id) }}"
-                                        class="btn btn-primary">Solve</a>
                                 @endif
 
 

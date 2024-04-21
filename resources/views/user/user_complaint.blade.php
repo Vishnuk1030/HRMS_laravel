@@ -313,7 +313,7 @@
                                                 <div
                                                     class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                                    <img src="{{ asset('assets/img/leaveimg.png') }}"
+                                                    <img src="{{ asset('assets/img/compliant.webp') }}"
                                                         class="img-fluid rounded-3" alt="Sample image">
 
                                                 </div>

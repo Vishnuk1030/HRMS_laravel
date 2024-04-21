@@ -232,7 +232,7 @@
                                                                 <input type="text"
                                                                     value="{{ Auth::guard('employee')->user()->name }}"
                                                                     name="name" id="form3Example3c"
-                                                                    class="form-control" />
+                                                                    class="form-control" readonly/>
                                                                 @error('name')
                                                                     <span class="validate">{{ $message }}</span>
                                                                 @enderror

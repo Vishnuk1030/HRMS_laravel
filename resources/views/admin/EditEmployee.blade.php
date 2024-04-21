@@ -244,7 +244,7 @@
                                                                     for="form3Example3c">Name</label>
                                                                 <input type="text" name="name" id="form3Example3c"
                                                                     value="{{ $employee->name }}"
-                                                                    class="form-control" />
+                                                                    class="form-control" readonly/>
                                                                 @error('name')
                                                                     <span class="validate">{{ $message }}</span>
                                                                 @enderror

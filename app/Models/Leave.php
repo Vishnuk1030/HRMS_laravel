@@ -12,6 +12,7 @@ class Leave extends Model
     protected $table = 'leave_apply';
 
     protected $fillable = [
+        'id',
         'employee_id',
         'name',
         'reason',
