@@ -43,6 +43,6 @@ class UserController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return redirect()->route('user_login')->with('success', 'User Logged Out Successfully');
+        return redirect()->route('user_login')->with('success', 'User logged out successfully');
     }
 }

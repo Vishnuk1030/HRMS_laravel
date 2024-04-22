@@ -70,6 +70,6 @@ class AdminController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return redirect()->route('login')->with('success', 'Logged Out Successfully');
+        return redirect()->route('login')->with('success', 'Admin logged out successfully');
     }
 }
